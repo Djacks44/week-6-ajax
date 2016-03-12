@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Favorite Movies</title>
+    <title>Movie and gif stuff</title>
     <style type="text/css">
         button, div, form, input {
             margin: 10px;
@@ -10,7 +10,6 @@
 <body>
 
 <div class="container">
-  <h1>Movie Search</h1>
 
   <div id="buttonsView">
   </div>
@@ -37,8 +36,7 @@
 </div>
 <script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
 <script type="text/javascript">
-    var movies = ['The Matrix', 'The Notebook', 'Mr. Nobody', 'The Lion King','Chicken Run','Pulp Ficition','The Dark Knight','Toy Story','Toy Story 2','Toy Story 3', 'Black mass','City of God','Scarface'];
-
+    var movies = ['The Matrix', 'The Notebook', 'Mr. Nobody', 'The Lion King','Chicken Run','Pulp fiction','The Dark Knight','Toy Story','Toy Story 2','Toy Story 3', 'Black mass','City of God','Scarface'];
 
     function renderButtons(){ 
         $('#buttonsView').empty();
@@ -58,8 +56,13 @@
 
  $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
     var gif = (response.data)
-     // for (var i = 0; i < response.data.length; i++){
-     //    console.log(response.data[i])
+
+//      for (var i = 0; i < response.data.length; i++){
+//       console.log(JSON.stringify(response.data[i].images.fixed_height.url))
+//       $("buttonsView").html('<img src="'+(response.data[i].images.fixed_height.url)+'">')
+// console.log('<img src="'+(response.data[i].images.fixed_height.url)+'">')
+//     };
+        // console.log(JSON.stringify(response.data))
         $("#img1").html("Rating: "+response.data[0].rating);
         $("#img2").html("Rating: "+response.data[1].rating);
         $("#img3").html("Rating: "+response.data[2].rating);
@@ -71,18 +74,71 @@
         $("#img9").html("Rating: "+response.data[8].rating);
         $("#img10").html("Rating: "+response.data[9].rating);
 
-           $("#my_image").attr("src",response.data[0].images.fixed_height.url);
-           $("#my_image2").attr("src",response.data[1].images.fixed_height.url);
-           $("#my_image3").attr("src",response.data[2].images.fixed_height.url);
-           $("#my_image4").attr("src",response.data[3].images.fixed_height.url);
-           $("#my_image5").attr("src",response.data[4].images.fixed_height.url);
-           $("#my_image6").attr("src",response.data[5].images.fixed_height.url);
-           $("#my_image7").attr("src",response.data[6].images.fixed_height.url);
-           $("#my_image8").attr("src",response.data[7].images.fixed_height.url);
-           $("#my_image9").attr("src",response.data[8].images.fixed_height.url);
-           $("#my_image10").attr("src",response.data[9].images.fixed_height.url);
-        // }
+           $("#my_image").attr("src",response.data[0].images.fixed_height_still.url);
+           $("#my_image2").attr("src",response.data[1].images.fixed_height_still.url);
+           $("#my_image3").attr("src",response.data[2].images.fixed_height_still.url);
+           $("#my_image4").attr("src",response.data[3].images.fixed_height_still.url);
+           $("#my_image5").attr("src",response.data[4].images.fixed_height_still.url);
+           $("#my_image6").attr("src",response.data[5].images.fixed_height_still.url);
+           $("#my_image7").attr("src",response.data[6].images.fixed_height_still.url);
+           $("#my_image8").attr("src",response.data[7].images.fixed_height_still.url);
+           $("#my_image9").attr("src",response.data[8].images.fixed_height_still.url);
+           $("#my_image10").attr("src",response.data[9].images.fixed_height_still.url);
 
+
+
+
+         
+ $('#my_image,#my_image2,#my_image3,#my_image4,#my_image5,#my_image6,#my_image7,#my_image8,#my_image9,#my_image10').on('click', function(){
+
+          switch (this.id) {
+    case "my_image":
+$("#my_image").attr("src",response.data[0].images.fixed_height.url);
+        break;
+    case "my_image2":
+$("#my_image2").attr("src",response.data[1].images.fixed_height.url);
+        break;
+    case "my_image3":
+$("#my_image3").attr("src",response.data[2].images.fixed_height.url);
+        break;
+    case "my_image4":
+$("#my_image4").attr("src",response.data[3].images.fixed_height.url);
+        break;
+    case "my_image5":
+$("#my_image5").attr("src",response.data[4].images.fixed_height.url);
+        break;
+    case "my_image6":
+$("#my_image6").attr("src",response.data[5].images.fixed_height.url);
+        break;
+    case "my_image7":
+$("#my_image7").attr("src",response.data[6].images.fixed_height.url);
+        break;
+    case "my_image8":
+$("#my_image8").attr("src",response.data[7].images.fixed_height.url);
+        break;
+    case "my_image9":
+$("#my_image9").attr("src",response.data[8].images.fixed_height.url);
+        break;
+    case "my_image10":
+$("#my_image10").attr("src",response.data[9].images.fixed_height.url);
+        break;
+}
+
+ });
+ $('#my_image,#my_image2,#my_image3,#my_image4,#my_image5,#my_image6,#my_image7,#my_image8,#my_image9,#my_image10').on('dblclick', function(){
+  $("#my_image").attr("src",response.data[0].images.fixed_height_still.url);
+           $("#my_image2").attr("src",response.data[1].images.fixed_height_still.url);
+           $("#my_image3").attr("src",response.data[2].images.fixed_height_still.url);
+           $("#my_image4").attr("src",response.data[3].images.fixed_height_still.url);
+           $("#my_image5").attr("src",response.data[4].images.fixed_height_still.url);
+           $("#my_image6").attr("src",response.data[5].images.fixed_height_still.url);
+           $("#my_image7").attr("src",response.data[6].images.fixed_height_still.url);
+           $("#my_image8").attr("src",response.data[7].images.fixed_height_still.url);
+           $("#my_image9").attr("src",response.data[8].images.fixed_height_still.url);
+           $("#my_image10").attr("src",response.data[9].images.fixed_height_still.url);
+
+
+ });
     
               
 
@@ -118,6 +174,23 @@ max-width: 80%;
     width: 20%;
     position: absolute;
     margin-left: 1000px;
+    
+  }#addMovie{
+    width: 100px;
+    height: 25px;
+     background-color: #10A8FF;
+    color: white;
+    border: transparent;
+  }button{
+     width: 100px;
+     height: 25px;
+    background-color: #10A8FF;
+    color: white;
+    border: transparent;
+
+;
+  }body{
+    background-image: url("images/ignasi_pattern_s.png");
   }
 </style>
 </body>

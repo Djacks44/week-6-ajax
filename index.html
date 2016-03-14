@@ -1,11 +1,6 @@
 <html>
 <head>
     <title>Movie and gif stuff</title>
-    <style type="text/css">
-        button, div, form, input {
-            margin: 10px;
-        }
-    </style>
 </head>
 <body>
 
@@ -14,29 +9,19 @@
   <div id="buttonsView">
   </div>
   
-  <div id="holder">
-  <div id="holder1"> <span id= "img1"> </span> <br><br> <img id="my_image" src=""/> </div>
-  <div id="holder2"> <span id= "img2"> </span> <br><br> <img id="my_image2" src=""/> </div>
-  <div id="holder3"> <span id= "img3"> </span> <br><br> <img id="my_image3" src=""/> </div>
-  <div id="holder4"> <span id= "img4"> </span> <br><br> <img id="my_image4" src=""/> </div>
-  <div id="holder5"> <span id= "img5"> </span> <br><br> <img id="my_image5" src=""/> </div>
-  <div id="holder6"> <span id= "img6"> </span> <br><br> <img id="my_image6" src=""/> </div>
-  <div id="holder7"> <span id= "img7"> </span> <br><br> <img id="my_image7" src=""/> </div>
-  <div id="holder8"> <span id= "img8"> </span> <br><br> <img id="my_image8" src=""/> </div>
-  <div id="holder9"> <span id= "img9"> </span> <br><br> <img id="my_image9" src=""/> </div>
-  <div id="holder10"> <span id= "img10"> </span> <br><br> <img id="my_image10" src=""/> </div>
-  </div>
+
 <div id="form">
   <form id="movie-form">
-    <label for="movie-input"> Add what ever you like!</label>
+    <label for="movie-input">   <b>***Add what ever you like!***</b></label>
     <input type="text" id="movie-input"><br>
    
     <input id="addMovie" type="submit" value="Submit">
   </form>
 </div>
+<div id="holder"></div>
 <script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
 <script type="text/javascript">
-    var movies = ['The Matrix', 'The Notebook', 'Mr. Nobody', 'The Lion King','Chicken Run','Pulp fiction','The Dark Knight','Toy Story','Toy Story 2','Toy Story 3', 'Black mass','City of God','Scarface'];
+    var movies = ['The Matrix', 'The Last Dragon', 'The Avengers', 'The Lion King','Chicken Run','Pulp fiction','The Dark Knight','Toy Story','Toy Story 2','Toy Story 3', 'Monsters Inc','City of God','Whiplash'];
 
     function renderButtons(){ 
         $('#buttonsView').empty();
@@ -47,6 +32,7 @@
             a.attr('data-name', movies[i]);
             a.text(movies[i]);
             $('#buttonsView').append(a);
+
         }
     }
 
@@ -54,95 +40,46 @@
         var movie = $(this).attr('data-name');
         var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=dc6zaTOxFJmzC&limit=10";
 
+
+
  $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
+
+  $("#holder").html('')
     var gif = (response.data)
 
-//      for (var i = 0; i < response.data.length; i++){
-//       console.log(JSON.stringify(response.data[i].images.fixed_height.url))
-//       $("buttonsView").html('<img src="'+(response.data[i].images.fixed_height.url)+'">')
-// console.log('<img src="'+(response.data[i].images.fixed_height.url)+'">')
-//     };
-        // console.log(JSON.stringify(response.data))
-        $("#img1").html("Rating: "+response.data[0].rating);
-        $("#img2").html("Rating: "+response.data[1].rating);
-        $("#img3").html("Rating: "+response.data[2].rating);
-        $("#img4").html("Rating: "+response.data[3].rating);
-        $("#img5").html("Rating: "+response.data[4].rating);
-        $("#img6").html("Rating: "+response.data[5].rating);
-        $("#img7").html("Rating: "+response.data[6].rating);
-        $("#img8").html("Rating: "+response.data[7].rating);
-        $("#img9").html("Rating: "+response.data[8].rating);
-        $("#img10").html("Rating: "+response.data[9].rating);
+     for (var i = 0; i < response.data.length; i++){
+   var newDiv = $('<div>');
+                    var p = $('<p>').text("Rating: "+gif[i].rating)
+                    var newImage = $('<img>').attr('src', gif[i].images.fixed_height_still.url)
+                    var animate = $(newImage).attr('data-animate', gif[i].images.fixed_height.url)
+                    var still = $(newImage).attr('data-still', gif[i].images.fixed_height_still.url)
+                    $(newImage).append(animate)
+                    $(newImage).append(still)
+                    $(newImage).addClass('newImage')
 
-           $("#my_image").attr("src",response.data[0].images.fixed_height_still.url);
-           $("#my_image2").attr("src",response.data[1].images.fixed_height_still.url);
-           $("#my_image3").attr("src",response.data[2].images.fixed_height_still.url);
-           $("#my_image4").attr("src",response.data[3].images.fixed_height_still.url);
-           $("#my_image5").attr("src",response.data[4].images.fixed_height_still.url);
-           $("#my_image6").attr("src",response.data[5].images.fixed_height_still.url);
-           $("#my_image7").attr("src",response.data[6].images.fixed_height_still.url);
-           $("#my_image8").attr("src",response.data[7].images.fixed_height_still.url);
-           $("#my_image9").attr("src",response.data[8].images.fixed_height_still.url);
-           $("#my_image10").attr("src",response.data[9].images.fixed_height_still.url);
+                      console.log(newImage)
+                    $(newDiv).append(p)
+                    $(newDiv).append(newImage)
 
+                     $("#holder").append(newDiv)
 
+    }; 
 
+     $('.newImage').on('click', function(){
+      // console.log("blue")
 
-         
- $('#my_image,#my_image2,#my_image3,#my_image4,#my_image5,#my_image6,#my_image7,#my_image8,#my_image9,#my_image10').on('click', function(){
+ var state = $(this).attr('data-state'); 
 
-          switch (this.id) {
-    case "my_image":
-$("#my_image").attr("src",response.data[0].images.fixed_height.url);
-        break;
-    case "my_image2":
-$("#my_image2").attr("src",response.data[1].images.fixed_height.url);
-        break;
-    case "my_image3":
-$("#my_image3").attr("src",response.data[2].images.fixed_height.url);
-        break;
-    case "my_image4":
-$("#my_image4").attr("src",response.data[3].images.fixed_height.url);
-        break;
-    case "my_image5":
-$("#my_image5").attr("src",response.data[4].images.fixed_height.url);
-        break;
-    case "my_image6":
-$("#my_image6").attr("src",response.data[5].images.fixed_height.url);
-        break;
-    case "my_image7":
-$("#my_image7").attr("src",response.data[6].images.fixed_height.url);
-        break;
-    case "my_image8":
-$("#my_image8").attr("src",response.data[7].images.fixed_height.url);
-        break;
-    case "my_image9":
-$("#my_image9").attr("src",response.data[8].images.fixed_height.url);
-        break;
-    case "my_image10":
-$("#my_image10").attr("src",response.data[9].images.fixed_height.url);
-        break;
-}
+    if ( state == 'still'){
+                $(this).attr('src', $(this).data('animate'));
+                $(this).attr('data-state', 'animate');
+            }else{
+                $(this).attr('src', $(this).data('still'));
+                $(this).attr('data-state', 'still');
+            };
 
- });
- $('#my_image,#my_image2,#my_image3,#my_image4,#my_image5,#my_image6,#my_image7,#my_image8,#my_image9,#my_image10').on('dblclick', function(){
-  $("#my_image").attr("src",response.data[0].images.fixed_height_still.url);
-           $("#my_image2").attr("src",response.data[1].images.fixed_height_still.url);
-           $("#my_image3").attr("src",response.data[2].images.fixed_height_still.url);
-           $("#my_image4").attr("src",response.data[3].images.fixed_height_still.url);
-           $("#my_image5").attr("src",response.data[4].images.fixed_height_still.url);
-           $("#my_image6").attr("src",response.data[5].images.fixed_height_still.url);
-           $("#my_image7").attr("src",response.data[6].images.fixed_height_still.url);
-           $("#my_image8").attr("src",response.data[7].images.fixed_height_still.url);
-           $("#my_image9").attr("src",response.data[8].images.fixed_height_still.url);
-           $("#my_image10").attr("src",response.data[9].images.fixed_height_still.url);
-
-
- });
-    
-              
-
-              
+            });       
+            
         }); 
     }
 
@@ -164,16 +101,20 @@ $("#my_image10").attr("src",response.data[9].images.fixed_height.url);
 </script>
 
 <style type="text/css">
-#holder{
-max-width: 80%;
-}#holder1,#holder2,#holder3,#holder4,#holder5,#holder6,#holder7,#holder8,#holder9,#holder10{ 
+   button, div, input {
+            margin: 10px;
+        }#holder{
+max-width: 75%;
+
+}div{ 
     float: left;
+    color: #10A8FF;
     
   }#form{
     float: right;
     width: 20%;
-    position: absolute;
-    margin-left: 1000px;
+    color: #10A8FF;
+
     
   }#addMovie{
     width: 100px;
@@ -188,9 +129,10 @@ max-width: 80%;
     color: white;
     border: transparent;
 
-;
   }body{
     background-image: url("images/ignasi_pattern_s.png");
+  }#movie-input{
+    width: 200px;
   }
 </style>
 </body>

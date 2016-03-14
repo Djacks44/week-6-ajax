@@ -51,10 +51,8 @@
    var newDiv = $('<div>');
                     var p = $('<p>').text("Rating: "+gif[i].rating)
                     var newImage = $('<img>').attr('src', gif[i].images.fixed_height_still.url)
-                    var animate = $(newImage).attr('data-animate', gif[i].images.fixed_height.url)
-                    var still = $(newImage).attr('data-still', gif[i].images.fixed_height_still.url)
-                    $(newImage).append(animate)
-                    $(newImage).append(still)
+                    $(newImage).attr('data-animate', gif[i].images.fixed_height.url)
+                    $(newImage).attr('data-still', gif[i].images.fixed_height_still.url)
                     $(newImage).addClass('newImage')
 
                       console.log(newImage)
